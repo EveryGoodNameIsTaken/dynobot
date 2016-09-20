@@ -6,6 +6,9 @@ import string
 client = discord.Client()
 
 user_id = input("Before you go any further, what is your discord username and ID number? Enter it here, along with the hash (eg. Dynamo#1850):")
+	
+playlist = []	
+players = []
 
 
 @client.event
@@ -46,15 +49,12 @@ async def on_message(message):
 		
 	if message.content.startswith('!disconnect'):
 		disconnecter = message.server.get_member_named(user_id)
-		await asyncio.sleep(1)
-		await client.send_message(disconnecter, 'Someone\'s asked to disconnect me. My disconnect key is ' + disconnect_key + '. Say that in any of the channels to cause me to leave the server.')
+		if message.author == disconnecter:
+			await client.send_message(message.channel, 'Alright, later.')
+			await client.close()
+		else:
+			await client.send_message(message.channel, 'You can\'t tell me what to do!')
 	
-#The disconnect key is told to you when you run the program. Type it in, case sensitive, in the discord and it'll log the bot out.
-#	if message.content.startswith(disconnect_key):
-#		await client.send_message(message.channel, 'Alright, later')
-#		await client.leave_server(message.server)
-#		await client.close()
-
 
 #Youtube jams module
 	if message.content.startswith('!play') and not client.voice_client_in(message.server):
@@ -66,7 +66,10 @@ async def on_message(message):
 		player.start()
 		await asyncio.sleep(player.duration)
 		await voice.disconnect()
+			
+
 		
+	
 #Identifier
 	if any(x in message.content.lower() for x in ['fuck', 'shit', 'bitch', 'cunt', 'ass', 'emp', 'usa']):
 		await client.send_message(message.channel, 'Hey! Watch your language!')
