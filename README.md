@@ -15,4 +15,4 @@ https://rg3.github.io/youtube-dl/
 
 # HOW TO USE
 Just run it with whatever interpreter you've got. I tried to write it in a way that once you've got it going, it should tell you everything you need to use it.
-If you don't get it, I probably screwed up somewhere.
+You will need to add your own token to authorise the bot.
