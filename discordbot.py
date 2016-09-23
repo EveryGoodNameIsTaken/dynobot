@@ -1,7 +1,6 @@
 import discord
 import asyncio
 import random
-import string
 
 client = discord.Client()
 
@@ -10,15 +9,16 @@ user_id = input("Before you go any further, what is your discord username and ID
 playlist = []	
 players = []
 
-
 @client.event
+
 async def on_ready():
 	print('Connected!')
 	print('Username: ' + client.user.name)
 	print('ID: ' + client.user.id)
-	await asyncio.sleep(1)
-#	for server in client.servers:
-#		await client.send_message(server, 'Hello! My name is Dynobot! \nType !commands for a list of commands \nIf you have any questions, queries, or bug reports, go bother my creator, Dynamo#1850')
+	await client.change_status (discord.Game(name='github.com/EveryGoodNameIsTaken/dynobot'))
+	
+	for server in client.servers:
+		await client.send_message(server, 'Hello! My name is Dynobot! \nType !commands for a list of commands \nIf you have any questions, queries, or bug reports, go bother my creator, Dynamo#1850')
 
 @client.event
 async def on_message(message):
@@ -57,6 +57,7 @@ async def on_message(message):
 	
 
 #Youtube jams module
+
 	if message.content.startswith('!play') and not client.voice_client_in(message.server):
 		await client.join_voice_channel(message.author.voice.voice_channel)
 		youtube_string = message.content
@@ -64,10 +65,21 @@ async def on_message(message):
 		voice = client.voice_client_in(message.server)
 		player = await voice.create_ytdl_player(youtube_string[1])
 		player.start()
+		await client.send_message(message.channel, '**Now playing:** ' + player.title)
 		await asyncio.sleep(player.duration)
 		await voice.disconnect()
-			
 
+	if message.content.startswith('!nutshack') and not client.voice_client_in(message.server):
+		await client.join_voice_channel(message.author.voice.voice_channel)
+		voice = client.voice_client_in(message.server)
+		player = await voice.create_ytdl_player('https://www.youtube.com/watch?v=gO_KxGlY62g')
+		player.start()
+		await asyncio.sleep(player.duration)
+		await voice.disconnect()
+
+	if message.content.startswith('!stop'):
+		voice = client.voice_client_in(message.server)
+		await voice.disconnect()
 		
 	
 #Identifier
@@ -88,7 +100,7 @@ async def on_message(message):
 				sides_of_dice = 99
 			each_dice = 0
 			dice_results = []
-			while each_dice != amount_of_dice:
+			while each_dice < amount_of_dice:
 				dice_result = random.randrange(1, (sides_of_dice + 1))
 				dice_results.append(dice_result)
 				each_dice += 1
