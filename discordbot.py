@@ -18,7 +18,7 @@ async def on_ready():
 	await client.change_status (discord.Game(name='github.com/EveryGoodNameIsTaken/dynobot'))
 	
 	for server in client.servers:
-		await client.send_message(server, 'Hello! My name is Dynobot! \nType !commands for a list of commands \nIf you have any questions, queries, or bug reports, go bother my creator, Dynamo#1850')
+		await client.send_message(server, 'Hello! My name is Dynobot! \nType !commands for a list of commands \nIf you have any questions, queries, or bug reports, fix it yourself, this bot is long abandoned. No relation to the other, big Dynobot')
 
 @client.event
 async def on_message(message):
